@@ -1,5 +1,5 @@
 ---
-- hosts: remote_server
+- hosts: forela-internal.dev
   gather_facts: no
   become: yes
 
