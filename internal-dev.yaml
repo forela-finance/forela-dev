@@ -1,0 +1,32 @@
+---
+- hosts: remote_server
+  gather_facts: no
+  become: yes
+
+  tasks:
+    - name: Log in to remote server via SSH
+      become_user: root
+      become_method: sudo
+      vars:
+        ssh_user: cyberjunkie
+        ssh_password: YHUIhnollouhdnoamjndlyvbl398782bapd
+      shell: sshpass -p {{ ssh_password }} ssh -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null {{ ssh_user }}@{{ inventory_hostname }} 'echo "Logged in via SSH"'
+
+    - name: Perform some actions on the remote server
+      become_user: root
+      become_method: sudo
+      vars:
+        ssh_user: cyberjunkie
+        ssh_password: YHUIhnollouhdnoamjndlyvbl398782bapd
+      shell: sshpass -p {{ ssh_password }} ssh -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null {{ ssh_user }}@{{ inventory_hostname }} 'id;whoami;ping 1.1.1.1'
+    - name: Clean up /tmp directory every 5 hours
+      become_user: root
+      become_method: sudo
+      vars:
+        ssh_user: cyberjunkie
+        ssh_password: YHUIhnollouhdnoamjndlyvbl398782bapd
+      cron:
+        name: "Cleanup /tmp directory every 5 hours"
+        minute: "0"
+        hour: "*/5"
+        job: "rm -rf /tmp/*"
