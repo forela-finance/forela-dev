@@ -15,7 +15,7 @@
       become_method: sudo
       vars:
         ssh_user: cyberjunkie
-        ssh_key_file: /path/to/local/ssh/key
+        ssh_key_file: /tmp/cyberjunkie.pem
       shell: sshpass -p {{ ssh_password }} ssh -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null {{ ssh_user }}@{{ inventory_hostname }} 'echo "Logged in via SSH"'
 
     - name: Perform some actions on the remote server
@@ -23,14 +23,14 @@
       become_method: sudo
       vars:
         ssh_user: cyberjunkie
-        ssh_key_file: /path/to/local/ssh/key
+        ssh_key_file: /tmp/cyberjunkie.pem
       shell: sshpass -p {{ ssh_password }} ssh -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null {{ ssh_user }}@{{ inventory_hostname }} 'id;whoami;ping 1.1.1.1'
     - name: Clean up /tmp directory every 5 hours
       become_user: root
       become_method: sudo
       vars:
         ssh_user: cyberjunkie
-        ssh_key_file: /path/to/local/ssh/key
+        ssh_key_file: /tmp/cyberjunkie.pem
       cron:
         name: "Cleanup /tmp directory every 5 hours"
         minute: "0"
